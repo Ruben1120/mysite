@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruben Alves Consultoria em Mikrotik e Redes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #0b0f14;
+      color: #f1f1f1;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(10, 14, 18, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 18px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 255, 200, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.6em;
+      color: #00ffc3;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: #f1f1f1;
+      margin-left: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #00ffc3;
+    }
+
+    section {
+      padding: 100px 10%;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      justify-content: center;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url("https://images.unsplash.com/photo-1581092160562-40aa08e7883e?auto=format&fit=crop&w=1600&q=80") no-repeat center/cover;
+    }
+
+    #home h2 {
+      font-size: 2.8em;
+      margin-bottom: 20px;
+      color: #00ffc3;
+      text-shadow: 0 0 10px rgba(0, 255, 195, 0.3);
+    }
+
+    #home p {
+      max-width: 750px;
+      font-size: 1.1em;
+      color: #ddd;
+    }
+
+    #servicos h2,
+    #contato h2 {
+      text-align: center;
+      color: #00ffc3;
+      margin-bottom: 40px;
+      font-size: 2em;
+    }
+
+    .servicos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 35px;
+    }
+
+    .card {
+      background: #11161d;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 25px rgba(0, 255, 195, 0.05);
+      transition: all 0.4s ease;
+      border: 1px solid transparent;
+    }
+
+    .card:hover {
+      border-color: #00ffc3;
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 255, 195, 0.15);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      color: #00ffc3;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #11161d;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 195, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input,
+    textarea {
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #222;
+      background: #0b0f14;
+      color: #fff;
+      outline: none;
+      resize: none;
+      transition: 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #00ffc3;
+    }
+
+    button {
+      background: linear-gradient(90deg, #00ffc3, #00bfff);
+      color: #0b0f14;
+      font-weight: 600;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    footer {
+      text-align: center;
+      padding: 50px 0;
+      color: #888;
+      border-top: 1px solid rgba(0, 255, 195, 0.1);
+      background: #0b0f14;
+    }
+
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      nav a {
+        margin: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Ruben Alves Consultoria</h1>
+    <nav>
+      <a href="#home">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section id="home">
+    <h2>Consultoria Profissional em Mikrotik e Redes</h2>
+    <p>
+      Sou o <strong>Ruben Alves</strong>, especialista em configuração e otimização de redes Mikrotik.
+      Ofereço soluções completas para provedores pequenos e médios: desde BGP, VLANs e PPPoE até automações e projetos FTTH.
+      Melhore o desempenho e reduza custos com minha consultoria personalizada.
+    </p>
+  </section>
+
+  <section id="servicos">
+    <h2>Serviços Oferecidos</h2>
+    <div class="servicos">
+      <div class="card">
+        <h3>Configuração Mikrotik</h3>
+        <p>CGNAT, VLANs, Port Forward, BGP simples, PPPoE, IPv6 e muito mais — com desempenho e estabilidade garantidos.</p>
+      </div>
+
+      <div class="card">
+        <h3>Automação de Provedores</h3>
+        <p>Criação de rotinas automáticas, backups agendados e provisionamento via Telegram para OLTs suportadas.</p>
+      </div>
+
+      <div class="card">
+        <h3>Projetos FTTH</h3>
+        <p>Desenho e balanceamento de redes ópticas, incluindo zonas rurais, com foco em eficiência e expansão.</p>
+      </div>
+
+      <div class="card">
+        <h3>Switches TP-Link e Mikrotik</h3>
+        <p>Configuração otimizada de switches para redes mais rápidas, seguras e com melhor gerenciamento.</p>
+      </div>
+
+      <div class="card">
+        <h3>Consultoria Estratégica</h3>
+        <p>Atendimento personalizado para provedores — análise de topologia, desempenho e boas práticas operacionais.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <h2>Solicite um Orçamento</h2>
+    <form>
+      <input type="text" placeholder="Seu nome" required />
+      <input type="email" placeholder="Seu e-mail" required />
+      <input type="text" placeholder="Assunto" required />
+      <textarea rows="5" placeholder="Descreva o que precisa..." required></textarea>
+      <button type="submit">Enviar Mensagem</button>
+    </form>
+    <br />
+    <p style="text-align:center; color:#ccc;">
+      📞 <strong>WhatsApp:</strong> <a href="https://wa.me/5587988222816" style="color:#00ffc3;">(87) 98822-2816</a><br />
+      📧 <strong>Email:</strong> rubenjosma11@gmail.com
+    </p>
+  </section>
+
+  <footer>
+    © 2025 Ruben Alves Consultoria em Mikrotik e Redes — Todos os direitos reservados.
+  </footer>
+
+  <a href="https://wa.me/5587988222816" class="whatsapp-btn" title="Fale comigo no WhatsApp">💬</a>
+
+  <script>
+    // Animação ao rolar
+    const sections = document.querySelectorAll("section");
+    const reveal = () => {
+      const trigger = window.innerHeight * 0.8;
+      sections.forEach((sec) => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", reveal);
+    reveal();
+  </script>
+</body>
+</html>
